@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 
+app.use(express.json())
+
 let heroes = [
     {
       "name": "Ana",
@@ -205,6 +207,27 @@ app.get('/api/team/:id', (request, response) => {
     ? response.json(teamMember)
     : response.status(404).end();
 });
+
+app.post('/api/team', (request, response) => {
+    const body = request.body;
+    console.log(body)
+    
+    if (!body.name) {
+        return response.status(400).json({
+            error : "content missing"
+        })
+    }
+
+    const hero = {
+        name: body.name,
+        role: body.role,
+        id: body.id
+    };
+
+    team = team.concat(hero);
+
+    response.json(hero)
+})
 
 app.delete('/api/team/:id', (request, response) => {
     const id = Number(request.params.id);
