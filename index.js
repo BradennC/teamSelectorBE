@@ -201,7 +201,16 @@ app.get('/api/team/:id', (request, response) => {
     const id = Number(request.params.id);
     const teamMember = team.find(hero => hero.id === id);
 
-    response.json(teamMember)
+    (teamMember)
+    ? response.json(teamMember)
+    : response.status(404).end();
+});
+
+app.delete('/api/team/:id', (request, response) => {
+    const id = Number(request.params.id);
+    team = team.filter(hero => hero.id !== id);
+
+    response.status(204).end();
 });
 
 const PORT = 3001
